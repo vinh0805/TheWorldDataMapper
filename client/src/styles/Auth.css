@@ -1,0 +1,59 @@
+@import url('./color.css');
+
+.landing{
+   
+
+}
+.wrap-header{
+     width: 100%;
+     padding-top: 20px;
+     margin: 0px;
+    height: 75px;
+    background: var(--backGroundHeader);
+    border-bottom: solid 1px var(--white);
+ }
+.logo-branch{
+  font-size: 15px;
+  text-align: right;
+}
+.logo-1-the-world{
+    padding-left: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--textColor);
+}
+.logo-2-data-mapper{
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--textColor);
+}
+.wrap-action-btn-login{
+    padding: 0px;
+    display: flex;
+    color: var(--textColor);
+    font-size: 15px;
+}
+.btn-create-account{
+    font-weight: bold;
+    width: 50%;
+    color: var(--textColor);
+    font-size: 15px;
+}
+.btn-create-account-selected{
+    font-weight: bold;
+    width: 50%;
+    color: var(--btn-selected);
+    font-size: 15px;
+}
+.btn-login{
+    font-weight: bold;
+    width: 50%;
+    color: var(--textColor);
+    font-size: 15px;
+}
+.btn-login-selected{
+    font-weight: bold;
+    width: 50%;
+    color: var(--btn-selected);
+    font-size: 15px;
+}
