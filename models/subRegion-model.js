@@ -16,7 +16,7 @@ const subRegionSchema = new Schema(
 			required: true
 		},
 		capital: {
-			type: String,
+			type: String,	
 			required: true
 		},
 		leader: {
@@ -31,8 +31,11 @@ const subRegionSchema = new Schema(
 			type: [String],
 			required: true
 		},
-		ancestorRegion: regionSchema
-		},
+		ancestorRegion: {
+			type: Number,
+			required: true
+		}
+	},
 	{ timestamps: true }
 );
 

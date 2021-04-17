@@ -70,9 +70,12 @@ module.exports = {
 			@returns {string} the objectID of the sub region or an error message
 		**/
 		addSubRegion: async (_, args) => {
-			const { subregion } = args;
+			const { subRegion } = args;
 			const objectId = new ObjectId();
-			const { id, name, capital, leader, flag, landmarks, ancestorRegion } = subregion;
+			const { id, name, capital, leader, flag, landmarks, ancestorRegion } = subRegion;
+
+			let newParentRegion = await Region.findOne({id: ancestorRegion});
+
 			const newSubRegion = new SubRegion({
 				_id: objectId,
 				id: id,
@@ -82,8 +85,15 @@ module.exports = {
 				landmarks: landmarks,
 				ancestorRegion: ancestorRegion
 			});
+
+			// update sub region list of new parent
+			newParentRegion.subRegion.push(subRegion);
+			let newParentRegionSubRegionList = subRegion.subRegion;
 			const updated = await newSubRegion.save();
-			if(updated) return objectId;
+			const updatedNewParent = await SubRegion.updateOne(
+				{id: newRegionId}, {subRegion: newParentRegionSubRegionList});
+
+			if(updated && updatedNewParent) return objectId;
 			else return ('Could not add subregion');
 		},
 		/** 
@@ -117,7 +127,8 @@ module.exports = {
 			const objectId = new ObjectId(_id);
 			let subRegion = await SubRegion.findOne({_id: objectId});
 			if(subRegion) {
-				const updated = await SubRegion.updateOne({_id: objectId}, {ancestorRegion: newParent});
+				const updated = await SubRegion.updateOne(
+					{_id: objectId}, {ancestorRegion: newParent});
 				if(updated) return value;
 			}
 			return "";
@@ -133,7 +144,8 @@ module.exports = {
 			if(subRegion) {
 				subRegion.content.push(content);
 				let newContent = subRegion.content;
-				const updated = await SubRegion.updateOne({_id: objectId}, {content: newContent});	
+				const updated = await SubRegion.updateOne(
+					{_id: objectId}, {content: newContent});	
 				if(updated) return value;
 			}
 			return "";
@@ -187,13 +199,34 @@ module.exports = {
 		moveSubRegion: async (_, args) => {
 			const { _id, newRegionId } = args;
 			const objectId = new ObjectId(_id);
-			const objectNewRegionId = new ObjectId(newRegionId);
 			
 			let subRegion = await SubRegion.findOne({_id: objectId});
-			let parentRegion = await Region.findOne({_id: objectNewRegionId});
-			if(subRegion) {
-				const updated = await SubRegion.updateOne({_id: objectId}, {ancestorRegion: parentRegion});
-				if(updated) return value;
+			const oldRegionId = subRegion.ancestorRegion;
+			let oldParentRegion = await Region.findOne({id: oldRegionId});
+			let newParentRegion = await Region.findOne({id: newRegionId});
+
+			if(subRegion && oldParentRegion && oldParentRegion) {
+				// update sub region list of old parent
+				oldParentRegion.subRegion.map((row) => {
+					if (row === subRegion) {
+						delete row;
+					}
+					break;
+				});
+				oldParentRegionSubRegionList = oldParentRegion.subRegion;
+				const updatedOldParent = await SubRegion.updateOne(
+					{id: oldRegionId}, {subRegion: oldParentRegionSubRegionList});
+
+				// update sub region list of new parent
+				newParentRegion.subRegion.push(subRegion);
+				let newParentRegionSubRegionList = subRegion.subRegion;
+				const updatedNewParent = await SubRegion.updateOne(
+					{id: newRegionId}, {subRegion: newParentRegionSubRegionList});
+				
+				// update sub region
+				const updated = await SubRegion.updateOne(
+					{_id: objectId}, {ancestorRegion: newRegionId});
+				if(updated && updatedOldParent && updatedNewParent) return value;
 			}
 			return "";
 		}
