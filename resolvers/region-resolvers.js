@@ -163,11 +163,10 @@ module.exports = {
 					if (row === content) {
 						delete row;
 					}
-					break;
 				});
 				let newContent = subRegion.content;
 				const updated = await SubRegion.updateOne({_id: objectId}, {content: newContent});
-				if(updated) return value;
+				if(updated) return value;		
 			}
 			return "";
 		},
@@ -184,7 +183,6 @@ module.exports = {
 					if (row === oldContent) {
 						row = newContent;
 					}
-					break;
 				});
 				let newContent = subRegion.content;
 				const updated = await SubRegion.updateOne({_id: objectId}, {content: newContent});
@@ -211,7 +209,6 @@ module.exports = {
 					if (row === subRegion) {
 						delete row;
 					}
-					break;
 				});
 				oldParentRegionSubRegionList = oldParentRegion.subRegion;
 				const updatedOldParent = await SubRegion.updateOne(

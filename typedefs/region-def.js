@@ -6,7 +6,7 @@ const typeDefs = gql `
 		_id: String!
 		id: Int!
 		name: String!
-		subRegion: [SubRegion]
+		subRegion: [SubRegion!]
 	}
 	type SubRegion {
 		_id: String!
@@ -20,20 +20,20 @@ const typeDefs = gql `
 	}
 
 	extend type Query {
-		getAllMaps: [Map]
-		getMapById(_id: String!): Map
+		getAllMaps: [Map!]
+		getMapById(_id: String!): Map!
 
-		getAllRegions: [Region]
-		getRegionById: Region
-		getSubRegionById: SubRegion
-		getPreviousRegion: Region
-		getNextRegion: Region
+		getAllRegions: [Region!]
+		getRegionById: Region!
+		getSubRegionById: SubRegion!
+		getPreviousRegion: Region!
+		getNextRegion: Region!
 	}
 
 	extend type Mutation {
 		addSubRegion(subRegion: SubRegionInput!): SubRegion
 		editSubRegion(_id: String!, newSubRegion: SubRegionInput!): SubRegion
-		deleteSubRegion(_id: String!): boolean
+		deleteSubRegion(_id: String!): Boolean
 		changeParentOfSubRegion(_id: String!, newParent: String!): SubRegion
 		addLandmark(_id: String!, content: String): String
 		deleteLandmark(_id: String!, content: String): [String]

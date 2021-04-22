@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm start",
+    "client": "",
     "server": "nodemon",
     "start": " concurrently \"npm:server\" \"npm:client\" "
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wolfie-VIP/CSE316-Spring21-HW3.git"
+    "url": "git+https://https://github.com/tandn164/TheWorldDataMapper.git"
   },
   "author": "",
   "license": "ISC",

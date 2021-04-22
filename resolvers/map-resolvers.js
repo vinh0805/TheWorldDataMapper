@@ -16,7 +16,6 @@ module.exports = {
 			if(!_id) { return([])};
 			const maps = await Map.find({owner: _id});
 			if(maps) return (maps);
-
 		},
 		/** 
 		 	@param 	 {object} args - a map id

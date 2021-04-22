@@ -1,5 +1,4 @@
 const { model, Schema, ObjectId } = require('mongoose');
-const regionSchema = require('./region-model').schema;
 
 const subRegionSchema = new Schema(
 	{
@@ -39,6 +38,6 @@ const subRegionSchema = new Schema(
 	{ timestamps: true }
 );
 
-const subRegion = model('SubRegion', subRegionSchema);
+const SubRegion = model('SubRegion', subRegionSchema);
 
 module.exports = SubRegion;

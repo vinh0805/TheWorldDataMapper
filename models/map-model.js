@@ -1,5 +1,5 @@
 const { model, Schema, ObjectId } = require('mongoose');
-const user = require('./user-model');
+const User = require('./user-model').schema;
 
 const mapSchema = new Schema( 
 	{
@@ -16,7 +16,7 @@ const mapSchema = new Schema(
 			required: true
 		},
 		owner: {
-			type: user,
+			type: User,
 			required: true
 		}
 	},
